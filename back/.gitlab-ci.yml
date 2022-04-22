@@ -1,0 +1,63 @@
+# image golang
+image: golang:1.13
+
+# folders of golang image to be cached. The goal here is to avoid downloading the same content several times. Once a job is completed,
+# the listed paths will be archived, and next job will use the same archive.
+cache:
+  paths:
+    - /apt-cache
+    - /go/src/github.com
+    - /go/src/golang.org
+    - /go/src/google.golang.org
+    - /go/src/gopkg.in
+
+stages:
+  - deploy
+
+deploy-go:
+  stage: deploy
+  only:
+    refs:
+      - tags
+      - master
+  before_script:
+    # Create a symbolic link under $GOPATH, this is needed for local build
+    - cd $GOPATH/src
+    - mkdir -p gitlab.com/$CI_PROJECT_NAMESPACE
+    - cd gitlab.com/$CI_PROJECT_NAMESPACE
+    - ln -s $CI_PROJECT_DIR
+    - cd $CI_PROJECT_NAME
+  script:
+    - go build -o ~/lfTripBack
+    ##
+    ## Install ssh-agent if not already installed, it is required by Docker.
+    ## (change apt-get to yum if you use an RPM-based image)
+    ##
+    - 'which ssh-agent || ( yum update -y && yum install openssh-client -y )'
+    
+    ##
+    ## Run ssh-agent (inside the build environment)
+    ##
+    - eval $(ssh-agent -s)
+    
+    ##
+    ## Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    ## We're using tr to fix line endings which makes ed25519 keys work
+    ## without extra base64 encoding.
+    ## https://gitlab.com/gitlab-examples/ssh-private-key/issues/1#note_48526556
+    ##
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$PRIVATEKEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
+    - cat ~/.ssh/id_rsa
+    ##
+    ## Create the SSH directory and give it the right permissions
+    ##
+    - ssh -o StrictHostKeyChecking=no ec2-user@"$PATHEWS" sudo service backtrip stop
+    - scp -o StrictHostKeyChecking=no ~/lfTripBack ec2-user@"$PATHEWS":/var/www/src
+    - ssh -o StrictHostKeyChecking=no ec2-user@"$PATHEWS" sudo service backtrip restart 
+    - ssh -o StrictHostKeyChecking=no ec2-user@"$PATHEWS" sudo service backtrip status 

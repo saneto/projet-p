@@ -1,0 +1,502 @@
+{
+	"info": {
+		"_postman_id": "c7327e6f-6367-4dae-b5cd-99beef5a8cd8",
+		"name": "Trips",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Search TRIPS",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"country\": \"allmagne\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urltest}}/elk",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"elk"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "send message",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"content\":\"13:20:21 <undefined> ds qd s\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urltest}}/searchtrips",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"searchtrips"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Search TRIPS with param",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urltest}}/searchtrips",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"searchtrips"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Trips",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urltest}}/searchtrips",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"searchtrips"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "get user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urltest}}/searchtrips",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"searchtrips"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "get user Chat",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urltest}}/chat",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"chat"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "get user Chat Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urltest}}/searchtrips",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"searchtrips"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d9f833e2-8b3c-4235-b150-4e8297fb3ff9",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"token\", jsonData.response.token);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"steve@gmail.com\",\n\t\"password\" : \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urltest}}/login",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"login"
+					]
+				},
+				"description": "email & password\n{\n\t\"email\":,\n\t\"password\":\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Chat",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uid\": \"2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urltest}}/chat",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"chat"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"vjky\",\r\n    \"lastname\": \"Vakkjl\",\r\n    \"email\": \"shhhky@gmail.com\",\r\n    \"password\": \"password\",\r\n    \"is_volunteer\": 1,\r\n    \"date_of_birth\": \"1992-02-08T00:00:00Z\",\r\n    \"sexe\": \"Homme\",\r\n    \"city\": \"Marseille\",\r\n    \"phone_number\": \"0624521458\",\r\n    \"adress\": \"3 boulevard du prado\",\r\n    \"description\": \"Etudiant en informatique et motivé\",\r\n    \"hospital_name\": \"\",\r\n    \"degree\": \"Etudiant Master 2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urltest}}/users",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Create trip",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"title\": \"dsqd\",   \r\n\t\"start_date\": \"2020-10-010T00:00:00Z\",\r\n    \"end_date\": \"2020-10-22T00:00:00Z\",\r\n\t\"country\": \"France\",\r\n\t\"description\": \"totot bamossedsqdkhfghfghgfhfghghqskdkqsdk\",\r\n\t\"image_program\": \"dqsd\",\r\n\t\"middle_age\": \"3\",\r\n\t\"nb_days\": 2,\r\n\t\"nb_traveler\": \"3\",\r\n\t\"program\": \"sqd\",\r\n\t\"budget\": 2\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urltest}}/trips",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"trips"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "update trip",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"title\": \"dsqd\",   \r\n\t\"start_date\": \"2020-10-01T00:00:00Z\",\r\n    \"end_date\": \"2020-10-12T00:00:00Z\",\r\n\t\"country\": \"allmagne\",\r\n\t\"description\": \"dqsdsd\",\r\n\t\"image_program\": \"dqsd\",\r\n\t\"middle_age\": \"3\",\r\n\t\"nb_days\": 2,\r\n\t\"nb_traveler\": \"3\",\r\n\t\"program\": \"sqd\",\r\n\t\"budget\": 2\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urltest}}/trips/1",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"trips",
+						"1"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Update messages Hack",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE1NzE5NDQyOTcsInVzZXJfaWQiOjF9.KmzFybp44OLv1z-a4-tfG9es5kgizsgiTagl3mrGvOM",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": 2,\r\n    \"mission_id\": 1,\r\n    \"body\": \"Ne fonctionne pas, si c'est bon\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urltest}}/comments/2",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"comments",
+						"2"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete comment Hack",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{urltest}}/comments/4",
+					"host": [
+						"{{urltest}}"
+					],
+					"path": [
+						"comments",
+						"4"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f9460785-9d59-49d2-9d28-d25aca37ef68",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f9e08b85-97cb-42f6-a320-6b11d4fb180f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "7bb7d863-59da-484f-9eb2-5c81767e4f7f",
+			"key": "urltest",
+			"value": "http://localhost:8080/api/v1"
+		},
+		{
+			"id": "aa507f9d-0ca7-4454-b214-e35ef4ab865c",
+			"key": "token",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}

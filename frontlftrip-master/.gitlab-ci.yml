@@ -1,0 +1,54 @@
+# image golang
+image: node:latest
+
+# folders of golang image to be cached. The goal here is to avoid downloading the same content several times. Once a job is completed,
+# the listed paths will be archived, and next job will use the same archive.
+cache:
+  paths:
+    - node_modules/
+
+stages:
+  - deploy
+
+deploy:
+  image: node:12
+  stage: deploy
+  only:
+    refs:
+      - tags
+      - master
+  script:
+    - yarn install
+    - yarn build 
+    ##
+    ## Install ssh-agent if not already installed, it is required by Docker.
+    ## (change apt-get to yum if you use an RPM-based image)
+    ##
+    - 'which ssh-agent || ( yum update -y && yum install openssh-client -y )'
+    
+    ##
+    ## Run ssh-agent (inside the build environment)
+    ##
+    - eval $(ssh-agent -s)
+    
+    ##
+    ## Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    ## We're using tr to fix line endings which makes ed25519 keys work
+    ## without extra base64 encoding.
+    ## https://gitlab.com/gitlab-examples/ssh-private-key/issues/1#note_48526556
+    ##
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$PRIVATEKEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - cat ~/.ssh/id_rsa
+    - ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
+    ##
+    ## Create the SSH directory and give it the right permissions
+    ##
+    - ssh -o StrictHostKeyChecking=no ec2-user@"$PATHEWS" sudo rm -rf /var/www/src/build
+    - ssh -o StrictHostKeyChecking=no ec2-user@"$PATHEWS" sudo rm -rf /home/ec2-user/build
+    - scp -r -o StrictHostKeyChecking=no ./build ec2-user@"$PATHEWS":/home/ec2-user/
+    - ssh -o StrictHostKeyChecking=no ec2-user@"$PATHEWS" sudo cp -rf /home/ec2-user/build /var/www/src
